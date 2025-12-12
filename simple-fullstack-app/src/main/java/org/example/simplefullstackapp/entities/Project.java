@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor @Getter @Setter
-@ToString(exclude = "tasks")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(exclude = {"tasks", "user"})
 public class Project {
 
     @Id
@@ -19,13 +22,18 @@ public class Project {
     private String title;
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
+    private User user;
+
     @OneToMany(
             mappedBy = "project",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @JsonIgnore // Prevent infinite recursion
+    @JsonIgnore
     private List<Task> tasks = new ArrayList<>();
 
     // Helper method
@@ -34,4 +42,3 @@ public class Project {
         task.setProject(this);
     }
 }
-
