@@ -31,6 +31,8 @@ public class SimpleFullstackAppApplication {
         SpringApplication.run(SimpleFullstackAppApplication.class, args);
     }
 
+
+
     @Bean
     public CommandLineRunner initData() {
         return args -> {
