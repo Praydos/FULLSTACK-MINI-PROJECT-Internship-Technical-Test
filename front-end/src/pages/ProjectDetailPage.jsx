@@ -1,4 +1,4 @@
-// src/pages/ProjectDetailPage.jsx (UPDATED)
+// src/pages/ProjectDetailPage.jsx (UPDATED - FIXED handleToggleComplete)
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getProjectDetails, createTask, updateTask, deleteTask } from '../api/api';
@@ -53,10 +53,44 @@ const ProjectDetailPage = () => {
         }
     };
 
+    // FIXED: This was sending only status, causing other fields to be null
     const handleToggleComplete = async (taskId, newStatus) => {
         try {
-            await updateTask(projectId, taskId, { status: newStatus });
-            fetchProject();
+            // Find the current task from project.tasks
+            const currentTask = project.tasks.find(task => task.id === taskId);
+            if (!currentTask) {
+                alert("Task not found");
+                return;
+            }
+
+            // Create update data with ALL task fields
+            const updateData = {
+                title: currentTask.title,
+                description: currentTask.description,
+                dueDate: currentTask.dueDate,
+                status: newStatus
+            };
+
+            await updateTask(projectId, taskId, updateData);
+            await fetchProject();
+        } catch (err) {
+            alert("Error updating task status: " + err.message);
+        }
+    };
+
+    // OR EVEN BETTER: Accept the entire task object from TaskItem
+    const handleToggleCompleteV2 = async (task, newStatus) => {
+        try {
+            // Create update data with ALL task fields from the passed task object
+            const updateData = {
+                title: task.title,
+                description: task.description,
+                dueDate: task.dueDate,
+                status: newStatus
+            };
+
+            await updateTask(projectId, task.id, updateData);
+            await fetchProject();
         } catch (err) {
             alert("Error updating task status: " + err.message);
         }
@@ -161,7 +195,9 @@ const ProjectDetailPage = () => {
                                 <TaskItem
                                     key={task.id}
                                     task={task}
-                                    onComplete={handleToggleComplete}
+                                    onComplete={(taskId, newStatus) => handleToggleComplete(taskId, newStatus)}
+                                    // OR use this better version if you update TaskItem:
+                                    // onComplete={(task, newStatus) => handleToggleCompleteV2(task, newStatus)}
                                     onDelete={handleDeleteTask}
                                     onEdit={handleEditTask}
                                 />
