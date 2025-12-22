@@ -32,7 +32,7 @@ public class SimpleFullstackAppApplication {
     }
 
 
-
+    // create some user with projects and tasks
     @Bean
     public CommandLineRunner initData() {
         return args -> {
