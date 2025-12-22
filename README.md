@@ -1,6 +1,22 @@
 # Project Management System
 
 A simple full-stack project management application with Spring Boot backend and React frontend featuring JWT authentication, project management, and task tracking.
+video link  : https://drive.google.com/drive/folders/1wjbu4N8NfVduBycsy1IyOqALwTsD5JhQ?usp=sharing
+
+> **Note:** I apologize for the rushed pace of the video; I tried to strictly respect the required time limit. Below are a few important points that I did not have the opportunity to mention.
+>
+> For this application, I chose a **monolithic architecture** because it is simpler, faster to develop, and reduces operational complexity for a project of this scale. However, the application could be decomposed into **microservices** if needed in the future.
+>
+> On the backend, I used **Spring Boot** due to its auto-configuration capabilities, production-ready features, and excellent support for ORM.
+>
+> For the frontend, I used **React**.
+> For the database, I used H2 during the development phase for rapid prototyping and testing, and later migrated to MySQL for persistence and production readiness.
+>
+> Regarding authentication, I implemented **JWT-based authentication** with **Spring Security**, ensuring a secure and stateless authentication mechanism.
+>
+> Finally, I would like to sincerely thank you for this opportunity. I hope my work meets the requirements outlined in the project description, and I am truly excited about the next step :).
+
+
 
 ## 🚀 Technology Stack
 
